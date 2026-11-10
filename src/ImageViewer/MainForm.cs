@@ -42,6 +42,10 @@ namespace ImageViewer
         /// アフィン変換行列
         /// </summary>
         private System.Drawing.Drawing2D.Matrix _matAffine;
+        /// <summary>
+        /// クリップボード画像の一時ファイル名
+        /// </summary>
+        private string _clipboardTempFileName;
 
         public MainForm()
         {
@@ -81,6 +85,8 @@ namespace ImageViewer
             {
                 _bmp.Dispose();
             }
+
+            DeleteClipboardTempFile();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -206,13 +212,23 @@ namespace ImageViewer
 
         private void picImage_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if ((e.KeyCode == Keys.Right) || (e.KeyCode == Keys.Down))
+            if (e.Control && e.KeyCode == Keys.C)
             {
+                CopyImageToClipboard();
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                PasteImageFromClipboard();
+            }
+            else if ((e.KeyCode == Keys.Right) || (e.KeyCode == Keys.Down))
+            {
+                if (string.IsNullOrEmpty(_openedFileName)) return;
                 // 次の画像ファイルを開く
                 OpenNextFile(_openedFileName);
             }
             else if ((e.KeyCode == Keys.Left) || (e.KeyCode == Keys.Up))
             {
+                if (string.IsNullOrEmpty(_openedFileName)) return;
                 // 前の画像ファイルを開く
                 OpenPreviousFile(_openedFileName);
             }
@@ -244,6 +260,12 @@ namespace ImageViewer
         private void OpenImageFile(string filename)
         {
             if (IsImageFile(filename) == false) return;
+
+            if (!string.IsNullOrEmpty(_clipboardTempFileName) &&
+                string.Equals(filename, _clipboardTempFileName, StringComparison.OrdinalIgnoreCase) == false)
+            {
+                DeleteClipboardTempFile();
+            }
 
             // 画像データの確保
             if (_img != null)
@@ -550,6 +572,62 @@ namespace ImageViewer
         private void ReStartButton_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+
+        private void mnuEditCopy_Click(object sender, EventArgs e)
+        {
+            CopyImageToClipboard();
+        }
+
+        private void mnuEditPaste_Click(object sender, EventArgs e)
+        {
+            PasteImageFromClipboard();
+        }
+
+        private void CopyImageToClipboard()
+        {
+            if (_bmp == null) return;
+
+            Clipboard.SetImage(_bmp);
+        }
+
+        private void PasteImageFromClipboard()
+        {
+            if (Clipboard.ContainsImage() == false) return;
+
+            using (var image = Clipboard.GetImage())
+            {
+                if (image == null) return;
+
+                DeleteClipboardTempFile();
+
+                _clipboardTempFileName = System.IO.Path.Combine(
+                    System.IO.Path.GetTempPath(),
+                    Guid.NewGuid().ToString("N") + ".png");
+
+                image.Save(_clipboardTempFileName, System.Drawing.Imaging.ImageFormat.Png);
+                OpenImageFile(_clipboardTempFileName);
+            }
+        }
+
+        private void DeleteClipboardTempFile()
+        {
+            if (string.IsNullOrEmpty(_clipboardTempFileName)) return;
+
+            try
+            {
+                if (System.IO.File.Exists(_clipboardTempFileName))
+                {
+                    System.IO.File.Delete(_clipboardTempFileName);
+                }
+            }
+            catch
+            {
+            }
+            finally
+            {
+                _clipboardTempFileName = null;
+            }
         }
     }
 }

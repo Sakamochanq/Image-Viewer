@@ -38,6 +38,9 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.ReStartButton = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.編集EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEditPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEditCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.表示VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMostButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -80,6 +83,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuFile,
+            this.編集EToolStripMenuItem,
             this.表示VToolStripMenuItem,
             this.ヘルプHToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -125,6 +129,31 @@
             this.mnuFileExit.Size = new System.Drawing.Size(185, 22);
             this.mnuFileExit.Text = "終了(&X)";
             this.mnuFileExit.Click += new System.EventHandler(this.mnuFileExit_Click);
+            // 
+            // 編集EToolStripMenuItem
+            // 
+            this.編集EToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuEditPaste,
+            this.mnuEditCopy});
+            this.編集EToolStripMenuItem.Name = "編集EToolStripMenuItem";
+            this.編集EToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.編集EToolStripMenuItem.Text = "編集(&E)";
+            // 
+            // mnuEditPaste
+            // 
+            this.mnuEditPaste.Name = "mnuEditPaste";
+            this.mnuEditPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.mnuEditPaste.Size = new System.Drawing.Size(180, 22);
+            this.mnuEditPaste.Text = "貼り付け(&V)";
+            this.mnuEditPaste.Click += new System.EventHandler(this.mnuEditPaste_Click);
+            // 
+            // mnuEditCopy
+            // 
+            this.mnuEditCopy.Name = "mnuEditCopy";
+            this.mnuEditCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.mnuEditCopy.Size = new System.Drawing.Size(180, 22);
+            this.mnuEditCopy.Text = "コピー(&C)";
+            this.mnuEditCopy.Click += new System.EventHandler(this.mnuEditCopy_Click);
             // 
             // 表示VToolStripMenuItem
             // 
@@ -238,6 +267,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuFileExit;
         private System.Windows.Forms.PictureBox picImage;
+        private System.Windows.Forms.ToolStripMenuItem 編集EToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuEditPaste;
+        private System.Windows.Forms.ToolStripMenuItem mnuEditCopy;
         private System.Windows.Forms.ToolStripMenuItem 表示VToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TopMostButton;
         private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
