@@ -168,7 +168,9 @@
             // 
             // TopMostButton
             // 
+            this.TopMostButton.Checked = true;
             this.TopMostButton.CheckOnClick = true;
+            this.TopMostButton.CheckState = System.Windows.Forms.CheckState.Checked;
             this.TopMostButton.Name = "TopMostButton";
             this.TopMostButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F5)));
             this.TopMostButton.Size = new System.Drawing.Size(185, 22);

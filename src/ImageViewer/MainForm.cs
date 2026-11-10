@@ -50,6 +50,7 @@ namespace ImageViewer
         public MainForm()
         {
             InitializeComponent();
+            this.TopMost = true;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
